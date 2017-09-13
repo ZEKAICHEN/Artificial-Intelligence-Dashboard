@@ -43,35 +43,10 @@ server <- function(input, output,session) {
     do.call(state_map, new_args)
   })
   
-  output$aimap <- renderPlot({
-    ggplot(df_com, aes(map_id = state)) +
-      geom_map(aes(fill = count), map = states_map) +
-      expand_limits(x = states_map$long, y = states_map$lat) + coord_map() +
-      theme(legend.position = "bottom", panel.background = element_blank()) +
-      scale_x_continuous(breaks = NULL) + scale_y_continuous(breaks = NULL) +
-      labs(x = "", y = "") + geom_point(aes(x=-df_uniq$W[1], y=df_uniq$N[1]), color="red") +
-      geom_point(aes(x=-df_uniq$W[2], y=df_uniq$N[2]), color="red") +
-      geom_point(aes(x=-df_uniq$W[3], y=df_uniq$N[3]), color="red") +
-      geom_point(aes(x=-df_uniq$W[4], y=df_uniq$N[4]), color="red") +
-      geom_point(aes(x=-df_uniq$W[5], y=df_uniq$N[5]), color="red") +
-      geom_point(aes(x=-df_uniq$W[6], y=df_uniq$N[6]), color="red") +
-      geom_point(aes(x=-df_uniq$W[7], y=df_uniq$N[7]), color="red") +
-      geom_point(aes(x=-df_uniq$W[8], y=df_uniq$N[8]), color="red") +
-      geom_point(aes(x=-df_uniq$W[9], y=df_uniq$N[9]), color="red") +
-      geom_point(aes(x=-df_uniq$W[10], y=df_uniq$N[10]), color="red") +
-      geom_point(aes(x=-df_uniq$W[11], y=df_uniq$N[11]), color="red") +
-      geom_point(aes(x=-df_uniq$W[12], y=df_uniq$N[12]), color="red") +
-      geom_point(aes(x=-df_uniq$W[13], y=df_uniq$N[13]), color="red") +
-      geom_point(aes(x=-df_uniq$W[14], y=df_uniq$N[14]), color="red") +
-      geom_point(aes(x=-df_uniq$W[15], y=df_uniq$N[15]), color="red") +
-      geom_point(aes(x=-df_uniq$W[16], y=df_uniq$N[16]), color="red") +
-      geom_point(aes(x=-df_uniq$W[17], y=df_uniq$N[17]), color="red") +
-      geom_point(aes(x=-df_uniq$W[18], y=df_uniq$N[18]), color="red") +
-      geom_point(aes(x=-df_uniq$W[19], y=df_uniq$N[19]), color="red") +
-      geom_point(aes(x=-df_uniq$W[20], y=df_uniq$N[20]), color="red") +
-      geom_point(aes(x=-df_uniq$W[21], y=df_uniq$N[21]), color="red") +
-      geom_point(aes(x=-df_uniq$W[22], y=df_uniq$N[22]), color="red") +
-      geom_point(aes(x=-df_uniq$W[23], y=df_uniq$N[23]), color="red")
+  output$aimap <- renderLeaflet({
+    n %>% addAwesomeMarkers(~-W, ~N, 
+                            label=paste0(AI_company$City,', ',AI_company$State),
+                            popup=content_second)
     })
   
   output$wcloud <- renderPlot({
@@ -180,7 +155,7 @@ ui <- bootstrapPage(useShinyjs(),
                                               
                                       ),
                                       tabItem("AImap",
-                                              plotOutput('aimap')
+                                              leafletOutput('aimap')
                                       ),
                                       tabItem("wc",
                                               plotOutput('wcloud')

@@ -108,3 +108,14 @@ content <- paste(sep = "<br/>",
                  paste("<b><a>Overall: </a></b>", tableau$overall))
 
 m = leaflet(tableau) %>% addTiles() %>% setView(lng = -95, lat = 35, zoom = 5)
+
+content_second <- paste(sep = "<br/>",
+                 paste("<b><a>Company name: </a></b>",AI_company$`Company Name`),
+                 paste("<b><a>Company category: </a></b>",AI_company$`Sub-category`),
+                 paste("<b><a>Start year: </a></b>", AI_company$`Start year`)
+)
+
+n = leaflet(AI_company) %>% addTiles() %>% setView(lng = -95, lat = 35, zoom = 5)
+
+
+
